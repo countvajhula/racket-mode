@@ -1,0 +1,1886 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+This manual is for Racket Mode (version 0.1,
+last updated 2019-05-13).
+
+Copyright (C) 2019 Greg Hendershott.
+
+Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU Free Documentation License,
+Version 1.3 or any later version published by the Free Software
+Foundation; with no Invariant Sections, with no Front-Cover Texts,
+and with no Back-Cover Texts.  A copy of the license is included in
+the section entitled "GNU Free Documentation License". -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Racket Mode 0.1</title>
+
+<meta name="description" content="Racket Mode 0.1">
+<meta name="keywords" content="Racket Mode 0.1">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="#Top" rel="start" title="Top">
+<link href="#Index" rel="index" title="Index">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="dir.html#Top" rel="up" title="(dir)">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="main.css">
+
+
+</head>
+
+<body lang="en">
+<h1 class="settitle" align="center">Racket Mode 0.1</h1>
+
+
+
+
+<a name="SEC_Contents"></a>
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="no-bullet">
+  <li><a name="toc-Introduction-1" href="#Introduction">1 Introduction</a></li>
+  <li><a name="toc-Install-1" href="#Install">2 Install</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Configure-Emacs-to-use-MELPA-1" href="#Configure-Emacs-to-use-MELPA">2.1 Configure Emacs to use MELPA</a></li>
+    <li><a name="toc-Install-Racket-Mode-1" href="#Install-Racket-Mode">2.2 Install Racket Mode</a></li>
+    <li><a name="toc-Minimal-Racket-1" href="#Minimal-Racket">2.3 Minimal Racket</a></li>
+  </ul></li>
+  <li><a name="toc-Uninstall-1" href="#Uninstall">3 Uninstall</a></li>
+  <li><a name="toc-Update-1" href="#Update">4 Update</a></li>
+  <li><a name="toc-Configure-1" href="#Configure">5 Configure</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Start-faster-1" href="#Start-faster">5.1 Start faster</a></li>
+    <li><a name="toc-Key-bindings-1" href="#Key-bindings">5.2 Key bindings</a></li>
+    <li><a name="toc-Unicode-input-method-1" href="#Unicode-input-method">5.3 Unicode input method</a></li>
+    <li><a name="toc-Completion-1" href="#Completion">5.4 Completion</a></li>
+    <li><a name="toc-Font_002dlock-_0028syntax-highlighting_0029-1" href="#Font_002dlock-_0028syntax-highlighting_0029">5.5 Font-lock (syntax highlighting)</a></li>
+    <li><a name="toc-paredit-1" href="#paredit">5.6 paredit</a></li>
+    <li><a name="toc-smartparens-1" href="#smartparens">5.7 smartparens</a></li>
+    <li><a name="toc-eldoc-1" href="#eldoc">5.8 eldoc</a></li>
+  </ul></li>
+  <li><a name="toc-Reference-1" href="#Reference">6 Reference</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Commands-1" href="#Commands">6.1 Commands</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Run-1" href="#Run">6.1.1 Run</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002drun-1" href="#racket_002drun">6.1.1.1 racket-run</a></li>
+        <li><a name="toc-racket_002dracket-1" href="#racket_002dracket">6.1.1.2 racket-racket</a></li>
+        <li><a name="toc-racket_002dprofile-1" href="#racket_002dprofile">6.1.1.3 racket-profile</a></li>
+        <li><a name="toc-racket_002dprofile_002dmode-1" href="#racket_002dprofile_002dmode">6.1.1.4 racket-profile-mode</a></li>
+        <li><a name="toc-racket_002dlogger-1" href="#racket_002dlogger">6.1.1.5 racket-logger</a></li>
+        <li><a name="toc-racket_002dlogger_002dmode-1" href="#racket_002dlogger_002dmode">6.1.1.6 racket-logger-mode</a></li>
+        <li><a name="toc-racket_002ddebug_002dmode-1" href="#racket_002ddebug_002dmode">6.1.1.7 racket-debug-mode</a></li>
+      </ul></li>
+      <li><a name="toc-Test-1" href="#Test">6.1.2 Test</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dtest-1" href="#racket_002dtest">6.1.2.1 racket-test</a></li>
+        <li><a name="toc-racket_002draco_002dtest-1" href="#racket_002draco_002dtest">6.1.2.2 racket-raco-test</a></li>
+      </ul></li>
+      <li><a name="toc-Eval-1" href="#Eval">6.1.3 Eval</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dsend_002dregion-1" href="#racket_002dsend_002dregion">6.1.3.1 racket-send-region</a></li>
+        <li><a name="toc-racket_002dsend_002ddefinition-1" href="#racket_002dsend_002ddefinition">6.1.3.2 racket-send-definition</a></li>
+        <li><a name="toc-racket_002dsend_002dlast_002dsexp-1" href="#racket_002dsend_002dlast_002dsexp">6.1.3.3 racket-send-last-sexp</a></li>
+      </ul></li>
+      <li><a name="toc-Visit-1" href="#Visit">6.1.4 Visit</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dvisit_002ddefinition-1" href="#racket_002dvisit_002ddefinition">6.1.4.1 racket-visit-definition</a></li>
+        <li><a name="toc-racket_002dvisit_002dmodule-1" href="#racket_002dvisit_002dmodule">6.1.4.2 racket-visit-module</a></li>
+        <li><a name="toc-racket_002dunvisit-1" href="#racket_002dunvisit">6.1.4.3 racket-unvisit</a></li>
+        <li><a name="toc-racket_002dopen_002drequire_002dpath-1" href="#racket_002dopen_002drequire_002dpath">6.1.4.4 racket-open-require-path</a></li>
+        <li><a name="toc-racket_002dfind_002dcollection-1" href="#racket_002dfind_002dcollection">6.1.4.5 racket-find-collection</a></li>
+      </ul></li>
+      <li><a name="toc-Learn-1" href="#Learn">6.1.5 Learn</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002ddescribe-1" href="#racket_002ddescribe">6.1.5.1 racket-describe</a></li>
+        <li><a name="toc-racket_002ddoc-1" href="#racket_002ddoc">6.1.5.2 racket-doc</a></li>
+      </ul></li>
+      <li><a name="toc-Edit-1" href="#Edit">6.1.6 Edit</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dfold_002dall_002dtests-1" href="#racket_002dfold_002dall_002dtests">6.1.6.1 racket-fold-all-tests</a></li>
+        <li><a name="toc-racket_002dunfold_002dall_002dtests-1" href="#racket_002dunfold_002dall_002dtests">6.1.6.2 racket-unfold-all-tests</a></li>
+        <li><a name="toc-racket_002dtidy_002drequires-1" href="#racket_002dtidy_002drequires">6.1.6.3 racket-tidy-requires</a></li>
+        <li><a name="toc-racket_002dtrim_002drequires-1" href="#racket_002dtrim_002drequires">6.1.6.4 racket-trim-requires</a></li>
+        <li><a name="toc-racket_002dbase_002drequires-1" href="#racket_002dbase_002drequires">6.1.6.5 racket-base-requires</a></li>
+        <li><a name="toc-racket_002dindent_002dline-1" href="#racket_002dindent_002dline">6.1.6.6 racket-indent-line</a></li>
+        <li><a name="toc-racket_002dsmart_002dopen_002dbracket-1" href="#racket_002dsmart_002dopen_002dbracket">6.1.6.7 racket-smart-open-bracket</a></li>
+        <li><a name="toc-racket_002dcycle_002dparen_002dshapes-1" href="#racket_002dcycle_002dparen_002dshapes">6.1.6.8 racket-cycle-paren-shapes</a></li>
+        <li><a name="toc-racket_002dbackward_002dup_002dlist-1" href="#racket_002dbackward_002dup_002dlist">6.1.6.9 racket-backward-up-list</a></li>
+        <li><a name="toc-racket_002dcheck_002dsyntax_002dmode-1" href="#racket_002dcheck_002dsyntax_002dmode">6.1.6.10 racket-check-syntax-mode</a></li>
+        <li><a name="toc-racket_002dunicode_002dinput_002dmethod_002denable-1" href="#racket_002dunicode_002dinput_002dmethod_002denable">6.1.6.11 racket-unicode-input-method-enable</a></li>
+        <li><a name="toc-racket_002dalign-1" href="#racket_002dalign">6.1.6.12 racket-align</a></li>
+        <li><a name="toc-racket_002dunalign-1" href="#racket_002dunalign">6.1.6.13 racket-unalign</a></li>
+        <li><a name="toc-racket_002dcomplete_002dat_002dpoint-1" href="#racket_002dcomplete_002dat_002dpoint">6.1.6.14 racket-complete-at-point</a></li>
+      </ul></li>
+      <li><a name="toc-Macro-expand-1" href="#Macro-expand">6.1.7 Macro expand</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dstepper_002dmode-1" href="#racket_002dstepper_002dmode">6.1.7.1 racket-stepper-mode</a></li>
+        <li><a name="toc-racket_002dexpand_002dfile-1" href="#racket_002dexpand_002dfile">6.1.7.2 racket-expand-file</a></li>
+        <li><a name="toc-racket_002dexpand_002dregion-1" href="#racket_002dexpand_002dregion">6.1.7.3 racket-expand-region</a></li>
+        <li><a name="toc-racket_002dexpand_002ddefinition-1" href="#racket_002dexpand_002ddefinition">6.1.7.4 racket-expand-definition</a></li>
+        <li><a name="toc-racket_002dexpand_002dlast_002dsexp-1" href="#racket_002dexpand_002dlast_002dsexp">6.1.7.5 racket-expand-last-sexp</a></li>
+      </ul></li>
+      <li><a name="toc-Other-1" href="#Other">6.1.8 Other</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dmode_002dstart_002dfaster-1" href="#racket_002dmode_002dstart_002dfaster">6.1.8.1 racket-mode-start-faster</a></li>
+      </ul></li>
+    </ul></li>
+    <li><a name="toc-Variables-1" href="#Variables">6.2 Variables</a>
+    <ul class="no-bullet">
+      <li><a name="toc-General-1" href="#General">6.2.1 General</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dprogram-1" href="#racket_002dprogram">6.2.1.1 racket-program</a></li>
+        <li><a name="toc-racket_002dcommand_002dport-1" href="#racket_002dcommand_002dport">6.2.1.2 racket-command-port</a></li>
+        <li><a name="toc-racket_002dcommand_002dstartup-1" href="#racket_002dcommand_002dstartup">6.2.1.3 racket-command-startup</a></li>
+        <li><a name="toc-racket_002dcommand_002dtimeout-1" href="#racket_002dcommand_002dtimeout">6.2.1.4 racket-command-timeout</a></li>
+        <li><a name="toc-racket_002dmemory_002dlimit-1" href="#racket_002dmemory_002dlimit">6.2.1.5 racket-memory-limit</a></li>
+        <li><a name="toc-racket_002derror_002dcontext-1" href="#racket_002derror_002dcontext">6.2.1.6 racket-error-context</a></li>
+        <li><a name="toc-racket_002dretry_002das_002dskeleton-1" href="#racket_002dretry_002das_002dskeleton">6.2.1.7 racket-retry-as-skeleton</a></li>
+        <li><a name="toc-racket_002duser_002dcommand_002dline_002darguments-1" href="#racket_002duser_002dcommand_002dline_002darguments">6.2.1.8 racket-user-command-line-arguments</a></li>
+        <li><a name="toc-racket_002dpath_002dfrom_002demacs_002dto_002dracket_002dfunction-1" href="#racket_002dpath_002dfrom_002demacs_002dto_002dracket_002dfunction">6.2.1.9 racket-path-from-emacs-to-racket-function</a></li>
+        <li><a name="toc-racket_002dpath_002dfrom_002dracket_002dto_002demacs_002dfunction-1" href="#racket_002dpath_002dfrom_002dracket_002dto_002demacs_002dfunction">6.2.1.10 racket-path-from-racket-to-emacs-function</a></li>
+      </ul></li>
+      <li><a name="toc-REPL-1" href="#REPL">6.2.2 REPL</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dhistory_002dfilter_002dregexp-1" href="#racket_002dhistory_002dfilter_002dregexp">6.2.2.1 racket-history-filter-regexp</a></li>
+        <li><a name="toc-racket_002dimages_002dinline-1" href="#racket_002dimages_002dinline">6.2.2.2 racket-images-inline</a></li>
+        <li><a name="toc-racket_002dimages_002dkeep_002dlast-1" href="#racket_002dimages_002dkeep_002dlast">6.2.2.3 racket-images-keep-last</a></li>
+        <li><a name="toc-racket_002dimages_002dsystem_002dviewer-1" href="#racket_002dimages_002dsystem_002dviewer">6.2.2.4 racket-images-system-viewer</a></li>
+        <li><a name="toc-racket_002dpretty_002dprint-1" href="#racket_002dpretty_002dprint">6.2.2.5 racket-pretty-print</a></li>
+      </ul></li>
+      <li><a name="toc-Other-2" href="#Otherx">6.2.3 Other</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002dindent_002dcurly_002das_002dsequence-1" href="#racket_002dindent_002dcurly_002das_002dsequence">6.2.3.1 racket-indent-curly-as-sequence</a></li>
+        <li><a name="toc-racket_002dindent_002dsequence_002ddepth-1" href="#racket_002dindent_002dsequence_002ddepth">6.2.3.2 racket-indent-sequence-depth</a></li>
+        <li><a name="toc-racket_002dpretty_002dlambda-1" href="#racket_002dpretty_002dlambda">6.2.3.3 racket-pretty-lambda</a></li>
+        <li><a name="toc-racket_002dsmart_002dopen_002dbracket_002denable-1" href="#racket_002dsmart_002dopen_002dbracket_002denable">6.2.3.4 racket-smart-open-bracket-enable</a></li>
+        <li><a name="toc-racket_002dlogger_002dconfig-1" href="#racket_002dlogger_002dconfig">6.2.3.5 racket-logger-config</a></li>
+      </ul></li>
+      <li><a name="toc-Experimental-debugger-1" href="#Experimental-debugger">6.2.4 Experimental debugger</a>
+      <ul class="no-bullet">
+        <li><a name="toc-racket_002ddebuggable_002dfiles-1" href="#racket_002ddebuggable_002dfiles">6.2.4.1 racket-debuggable-files</a></li>
+      </ul></li>
+    </ul></li>
+    <li><a name="toc-Faces-1" href="#Faces">6.3 Faces</a>
+    <ul class="no-bullet">
+      <li><a name="toc-racket_002dkeyword_002dargument_002dface-1" href="#racket_002dkeyword_002dargument_002dface">6.3.1 racket-keyword-argument-face</a></li>
+      <li><a name="toc-racket_002dselfeval_002dface-1" href="#racket_002dselfeval_002dface">6.3.2 racket-selfeval-face</a></li>
+      <li><a name="toc-racket_002dhere_002dstring_002dface-1" href="#racket_002dhere_002dstring_002dface">6.3.3 racket-here-string-face</a></li>
+      <li><a name="toc-racket_002dcheck_002dsyntax_002ddef_002dface-1" href="#racket_002dcheck_002dsyntax_002ddef_002dface">6.3.4 racket-check-syntax-def-face</a></li>
+      <li><a name="toc-racket_002dcheck_002dsyntax_002duse_002dface-1" href="#racket_002dcheck_002dsyntax_002duse_002dface">6.3.5 racket-check-syntax-use-face</a></li>
+      <li><a name="toc-racket_002dlogger_002dconfig_002dface-1" href="#racket_002dlogger_002dconfig_002dface">6.3.6 racket-logger-config-face</a></li>
+      <li><a name="toc-racket_002dlogger_002dtopic_002dface-1" href="#racket_002dlogger_002dtopic_002dface">6.3.7 racket-logger-topic-face</a></li>
+      <li><a name="toc-racket_002dlogger_002dfatal_002dface-1" href="#racket_002dlogger_002dfatal_002dface">6.3.8 racket-logger-fatal-face</a></li>
+      <li><a name="toc-racket_002dlogger_002derror_002dface-1" href="#racket_002dlogger_002derror_002dface">6.3.9 racket-logger-error-face</a></li>
+      <li><a name="toc-racket_002dlogger_002dwarning_002dface-1" href="#racket_002dlogger_002dwarning_002dface">6.3.10 racket-logger-warning-face</a></li>
+      <li><a name="toc-racket_002dlogger_002dinfo_002dface-1" href="#racket_002dlogger_002dinfo_002dface">6.3.11 racket-logger-info-face</a></li>
+      <li><a name="toc-racket_002dlogger_002ddebug_002dface-1" href="#racket_002dlogger_002ddebug_002dface">6.3.12 racket-logger-debug-face</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a name="toc-Index-1" href="#Index">Index</a></li>
+</ul>
+</div>
+
+
+<a name="Top"></a>
+<a name="Racket-Mode-0_002e1"></a>
+<h1 class="top">Racket Mode 0.1</h1>
+
+<p>This manual is for Racket Mode (version 0.1,
+last updated 2019-05-13).
+</p>
+<p>Copyright &copy; 2019 Greg Hendershott.
+</p>
+<blockquote>
+<p>Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU Free Documentation License,
+Version 1.3 or any later version published by the Free Software
+Foundation; with no Invariant Sections, with no Front-Cover Texts,
+and with no Back-Cover Texts.  A copy of the license is included in
+the section entitled &ldquo;GNU Free Documentation License&rdquo;.
+</p></blockquote>
+
+
+
+<p>-*- mode:org ; mode:visual-line -*-
+</p>
+<hr>
+<a name="Introduction"></a>
+<a name="Introduction-1"></a>
+<h2 class="chapter">1 Introduction</h2>
+
+<p>Racket Mode consists of a variety of Emacs major and minor modes, including:
+</p>
+<ul>
+<li> <code>racket-mode</code>: A major mode for editing <code>.rkt</code> files.
+
+</li><li> <code>racket-repl-mode</code>: A major mode for a Racket REPL. This uses a &ldquo;back end server&rdquo; written in Racket, which is responsible for running files and implementing commands that cannot be implemented in Emacs Lisp. The Racket code for this is delivered as part of the Emacs package (it is <em>not</em> a separate Racket package that you would need to install and worry about keeping in sync wiht the Emacs package).
+
+</li><li> A variety of other major and minor modes support various specific features, such as <code>racket-logger-mode</code>, <code>racket-check-syntax-mode</code>, and so on.
+</li></ul>
+
+<hr>
+<a name="Install"></a>
+<a name="Install-1"></a>
+<h2 class="chapter">2 Install</h2>
+
+<p>The recommended way to use Racket Mode is to install the package from <a href="https://melpa.org/">MELPA</a>.
+</p>
+<hr>
+<a name="Configure-Emacs-to-use-MELPA"></a>
+<a name="Configure-Emacs-to-use-MELPA-1"></a>
+<h3 class="section">2.1 Configure Emacs to use MELPA</h3>
+
+<p>To use MELPA:
+</p>
+<ul>
+<li> Add the following to your <tt>~/.emacs</tt> or <tt>~/.emacs.d/init.el</tt>:
+</li></ul>
+
+<div class="lisp">
+<pre class="lisp">(require 'package)
+(add-to-list 'package-archives
+	      '(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;)
+	      t)
+</pre></div>
+
+<ul>
+<li> Restart Emacs.
+
+</li><li> Type <kbd>M-x</kbd>  <code>package-refresh-contents</code> <kbd>RET</kbd> .
+</li></ul>
+
+<hr>
+<a name="Install-Racket-Mode"></a>
+<a name="Install-Racket-Mode-1"></a>
+<h3 class="section">2.2 Install Racket Mode</h3>
+
+<p>When Emacs is configured to use MELPA, simply type <kbd>M-x</kbd>  <tt>package-install</tt> <kbd>RET</kbd>  <tt>racket-mode</tt> <kbd>RET</kbd> .
+</p>
+<hr>
+<a name="Minimal-Racket"></a>
+<a name="Minimal-Racket-1"></a>
+<h3 class="section">2.3 Minimal Racket</h3>
+
+<p>If you have installed the minimal Racket distribution (for example by using the <a href="https://github.com/Homebrew/homebrew-core/blob/master/Formula/minimal-racket.rb">homebrew formula</a>: racket-mode needs some additional packages (like <code>errortrace</code> and <code>macro-debugger</code>). A simple way to get all these packages is to install the <code>drracket</code> Racket package. In a command shell:
+</p>
+<div class="example">
+<pre class="example">raco pkg install drracket
+</pre></div>
+
+<hr>
+<a name="Uninstall"></a>
+<a name="Uninstall-1"></a>
+<h2 class="chapter">3 Uninstall</h2>
+
+<p>To uninstall Racket Mode, simply type <kbd>M-x</kbd>  <code>package-delete</code> <kbd>RET</kbd>  <code>racket-mode</code> <kbd>RET</kbd> .
+</p>
+<p>You should probably also exit and restart Emacs.
+</p>
+<hr>
+<a name="Update"></a>
+<a name="Update-1"></a>
+<h2 class="chapter">4 Update</h2>
+
+<p>Be aware that updating an Emacs package doesn&rsquo;t necessarily fully update Emacs&rsquo; state. (One example symptom: an &ldquo;invalid function&rdquo; error message.)
+</p>
+<p>After updating the package, you might need to restart Emacs.
+</p>
+<p>In some cases, you might even need to:
+</p>
+<ol>
+<li> Uninstall Racket Mode.
+
+</li><li> Exit and restart Emacs.
+
+</li><li> Install Racket Mode.
+</li></ol>
+
+<hr>
+<a name="Configure"></a>
+<a name="Configure-1"></a>
+<h2 class="chapter">5 Configure</h2>
+
+<p>To start, there is only one [variable](Reference.md#variables) you <em>might</em> need to set:
+</p>
+<ul>
+<li> <code>racket-program</code> is the name or pathname of the Racket executable. It defaults to <code>Racket.exe</code> on Windows else <code>racket</code>.
+</li></ul>
+
+<p>On Windows or Linux, this default will probably work for you.
+</p>
+<p>On macOS, downloading Racket doesn&rsquo;t add its <code>bin</code> directory to your <code>PATH</code>. Even after you add it, GUI Emacs doesn&rsquo;t automatically use your path (unless you use the handy <a href="https://melpa.org/#/exec-path-from-shell">exec-path-from-shell</a> package). Therefore you may want to set <code>racket-program</code> to a full pathname like <code>/usr/racket/bin/racket</code>.
+</p>
+<p>You can <code>setq</code> this directly in your Emacs init file (<tt>~/.emacs</tt> or <tt>~/.emacs.d/init.el</tt>), or, use <kbd>M-x</kbd>  <code>customize</code>, as you prefer.
+</p>
+<hr>
+<a name="Start-faster"></a>
+<a name="Start-faster-1"></a>
+<h3 class="section">5.1 Start faster</h3>
+
+<p>You can use <kbd>M-x</kbd>  <code>racket-mode-start-faster</code> to make the Racket REPL start faster. See <a href="#racket_002dmode_002dstart_002dfaster">racket-mode-start-faster</a>.
+</p>
+<hr>
+<a name="Key-bindings"></a>
+<a name="Key-bindings-1"></a>
+<h3 class="section">5.2 Key bindings</h3>
+
+<p>To customize things like key bindings, you can use <code>racket-mode-hook</code> in your Emacs init file. For example, although <kbd>F5</kbd>  and <kbd>C-c C-c</kbd>  are bound by default to the <code>racket-run</code> command, let&rsquo;s say you wanted <kbd>C-c r</kbd>  to be an additional binding:
+</p>
+<div class="lisp">
+<pre class="lisp">(add-hook 'racket-mode-hook
+	  (lambda ()
+	    (define-key racket-mode-map (kbd &quot;C-c r&quot;) 'racket-run)))
+</pre></div>
+
+<hr>
+<a name="Unicode-input-method"></a>
+<a name="Unicode-input-method-1"></a>
+<h3 class="section">5.3 Unicode input method</h3>
+
+<p>An optional Emacs input method, <code>racket-unicode</code>, lets you easily type various Unicode symbols that might be useful when writing Racket code.
+</p>
+<p>To automatically enable the <code>racket-unicode</code> input method in <code>racket-mode</code> and <code>racket-repl-mode</code> buffers, put the following code in your Emacs init file:
+</p>
+<div class="lisp">
+<pre class="lisp">(add-hook 'racket-mode-hook      #'racket-unicode-input-method-enable)
+(add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable)
+</pre></div>
+
+<p>See <a href="#racket_002dunicode_002dinput_002dmethod_002denable">racket-unicode-input-method-enable</a>.
+</p>
+<hr>
+<a name="Completion"></a>
+<a name="Completion-1"></a>
+<h3 class="section">5.4 Completion</h3>
+
+<p>The usual <code>complete-symbol</code> &mdash; bound by default to <kbd>C-M-i</kbd>  &mdash; works, drawing on all symbols in the current Racket namespace.
+</p>
+<blockquote>
+<p><strong><strong>Tip:</strong></strong> When you first visit a <code>.rkt</code> file, or after you change its <code>require</code> forms, you may need to <kbd>M-x</kbd>  <a href="#racket_002drun">racket-run</a> again. Doing so makes the symbols available. (Otherwise, you may get &ldquo;stale&rdquo; symbols, or only symbols from <code>racket/base</code>.)
+</p></blockquote>
+
+<p>To have <kbd>TAB</kbd>  do completion as well as indent, add the following to your Emacs init file:
+</p>
+<div class="lisp">
+<pre class="lisp">(setq tab-always-indent 'complete)
+</pre></div>
+
+<p>This changes the behavior of Emacs&rsquo; standard <code>indent-for-tab-command</code>, to which <kbd>TAB</kbd>  is bound by default in the racket-mode edit and REPL modes.
+</p>
+<hr>
+<a name="Font_002dlock-_0028syntax-highlighting_0029"></a>
+<a name="Font_002dlock-_0028syntax-highlighting_0029-1"></a>
+<h3 class="section">5.5 Font-lock (syntax highlighting)</h3>
+
+<p>Font-lock (as Emacs calls syntax highlighting) can be controlled using the variable &lsquo;font-lock-maximum-decoration&rsquo;, which defaults to <code>t</code> (maximum). You can set it to a number, where 0 is the lowest level. You can even supply an association list to specify different values for different major modes.
+</p>
+<p>Historically you might choose a lower level for speed. These days you might do so because you prefer a simpler appearance.
+</p>
+<p>Racket-mode supports four, increasing levels of font-lock:
+</p>
+<table>
+<tr><td>Level</td><td>Description</td></tr>
+<tr><td>0</td><td>Just strings, comments, and <code>#lang</code>.</td></tr>
+<tr><td>1</td><td><code>#:keyword</code> and self-evaluating literals like numbers, quoted symbols (including using pipe delimiters), regular expressions.</td></tr>
+<tr><td>2</td><td>Identifiers in <code>define</code>-like and <code>let</code>-like forms.</td></tr>
+<tr><td>3</td><td>Identifiers provided by <code>racket</code>, <code>typed/racket</code>, <code>racket/syntax</code>, and <code>syntax/parse</code>. (This level effectively treats Racket as a language, instead of a language for making languages.)</td></tr>
+</table>
+
+<hr>
+<a name="paredit"></a>
+<a name="paredit-1"></a>
+<h3 class="section">5.6 paredit</h3>
+
+<p>You may want to add keybindings to <code>paredit-mode-map</code>:
+</p>
+<ul>
+<li> Bind the curly brace keys to <code>paredit-open-curly</code> and <code>paredit-close-curly</code>.
+
+</li><li> Bind whatever keys you prefer for <code>paredit-wrap-square</code> and <code>paredit-wrap-curly</code>.
+</li></ul>
+
+<p>For example, with <a href="https://melpa.org/#/use-package"><code>use-package</code></a>:
+</p>
+<div class="lisp">
+<pre class="lisp">(use-package paredit
+  :ensure t
+  :config
+  (dolist (m '(emacs-lisp-mode-hook
+	       racket-mode-hook
+	       racket-repl-mode-hook))
+    (add-hook m #'paredit-mode))
+  (bind-keys :map paredit-mode-map
+	     (&quot;{&quot;   . paredit-open-curly)
+	     (&quot;}&quot;   . paredit-close-curly))
+  (unless terminal-frame
+    (bind-keys :map paredit-mode-map
+	       (&quot;M-[&quot; . paredit-wrap-square)
+	       (&quot;M-{&quot; . paredit-wrap-curly))))
+</pre></div>
+
+<hr>
+<a name="smartparens"></a>
+<a name="smartparens-1"></a>
+<h3 class="section">5.7 smartparens</h3>
+
+<p>To use the default configuration that smartparens provides for Lisp modes generally and for racket-mode specifically, add to your Emacs init file:
+</p>
+<div class="lisp">
+<pre class="lisp">(require 'smartparens-config)
+</pre></div>
+
+<hr>
+<a name="eldoc"></a>
+<a name="eldoc-1"></a>
+<h3 class="section">5.8 eldoc</h3>
+
+<p>By default racket-mode sets <code>eldoc-documentation-function</code> to <code>nil</code> &mdash; no <code>eldoc-mode</code> support. You may set it to <code>racket-eldoc-function</code> in a <code>racket-mode-hook</code> if you really want to use <code>eldoc-mode</code> with Racket. But it is not a very satisfying experience because Racket is not a very &ldquo;eldoc-friendly&rdquo; language. Although racket-mode attempts to discover argument lists, contracts, or types this doesn&rsquo;t work in many common cases:
+</p>
+<ul>
+<li> Many Racket primitives are defined in <code>#%kernel</code> or <code>#%runtime</code>. There&rsquo;s no easy way to determine their argument lists. Most do not <code>provide</code> a contract.
+
+</li><li> Many of the interesting Racket forms are syntax (macros) not functions. There&rsquo;s no easy way to determine their &ldquo;argument lists&rdquo;.
+</li></ul>
+
+<p>A more satisfying experience is to use <a href="#racket_002ddescribe">racket-describe</a> or <a href="#racket_002ddoc">racket-doc</a>.
+</p>
+<hr>
+<a name="Reference"></a>
+<a name="Reference-1"></a>
+<h2 class="chapter">6 Reference</h2>
+
+<p>The following sections are generated from the doc strings for each command, variable, or face. (As a result, some of the formatting might not be quite as nice or correct as the previous sections.)
+</p>
+<p>You can also view these by using the normal Emacs help mechanism:
+</p>
+<ul>
+<li> <kbd>C-h f</kbd>  and enter the name of a command.
+</li><li> <kbd>C-h v</kbd>  and ente the name of a variable.
+</li></ul>
+
+<hr>
+<a name="Commands"></a>
+<a name="Commands-1"></a>
+<h3 class="section">6.1 Commands</h3>
+
+
+<hr>
+<a name="Run"></a>
+<a name="Run-1"></a>
+<h4 class="subsection">6.1.1 Run</h4>
+
+
+<hr>
+<a name="racket_002drun"></a>
+<a name="racket_002drun-1"></a>
+<h4 class="subsubsection">6.1.1.1 racket-run</h4>
+
+<p><kbd>C-c C-k</kbd>  or <kbd>C-c C-c</kbd> 
+</p>
+<p>Save and evaluate the buffer in REPL.
+</p>
+<p>With one C-u prefix, uses errortrace for improved stack traces.
+Otherwise follows the <a href="#racket_002derror_002dcontext">racket-error-context</a> setting.
+</p>
+<p>With two C-u prefixes, instruments code for step debugging. See
+<a href="#racket_002ddebug_002dmode">racket-debug-mode</a> and the variable <a href="#racket_002ddebuggable_002dfiles">racket-debuggable-files</a>.
+</p>
+<p>If point is within a Racket <code>module</code> form, the REPL &ldquo;enters&rdquo;
+that submodule (uses its language info and namespace).
+</p>
+<p>When you run again, the file is evaluated from scratch &ndash; the
+custodian releases resources like threads and the evaluation
+environment is reset to the contents of the file. In other words,
+like DrRacket, this provides the predictability of a &ldquo;static&rdquo;
+baseline, plus the ability to explore interactively using the
+REPL.
+</p>
+<p>See also <code>racket-run-and-switch-to-repl</code>, which is even more like
+DrRacket&rsquo;s Run because it selects the REPL window (gives it the
+focus), too.
+</p>
+<p>When <a href="#racket_002dretry_002das_002dskeleton">racket-retry-as-skeleton</a> is true, if your source file has
+an error, a &ldquo;skeleton&rdquo; of your file is evaluated to get
+identifiers from module languages, ~require~s, and definitions.
+That way, things like completion and <a href="#racket_002ddescribe">racket-describe</a> are more
+likely to work while you edit the file to fix the error. If not
+even the &ldquo;skeleton&rdquo; evaluation succeeds, you&rsquo;ll have only
+identifiers provided by racket/base, until you fix the error and
+run again.
+</p>
+<p>Output in the &lsquo;*Racket REPL*&lsquo; buffer that describes a file and
+position is automatically &ldquo;linkified&rdquo;. Examples of such text
+include:
+</p>
+<ul>
+<li> Racket error messages.
+</li><li> <code>rackunit</code> test failure location messages.
+</li><li> ~print~s of &lsquo;#&lt;path&gt;&lsquo; objects.
+</li></ul>
+
+<p>To visit these locations, move point there and press RET or mouse
+click. Or, use the standard <code>next-error</code> and <code>previous-error</code>
+commands.
+</p>
+<hr>
+<a name="racket_002dracket"></a>
+<a name="racket_002dracket-1"></a>
+<h4 class="subsubsection">6.1.1.2 racket-racket</h4>
+
+<p><kbd>&lt;C-M-f5&gt;</kbd> 
+</p>
+<p>Do &lsquo;racket &lt;file&gt;&lsquo; in <code>*shell*</code> buffer.
+</p>
+<hr>
+<a name="racket_002dprofile"></a>
+<a name="racket_002dprofile-1"></a>
+<h4 class="subsubsection">6.1.1.3 racket-profile</h4>
+
+<p><kbd>C-c C-o</kbd> 
+</p>
+<p>Runs with profiling instrumentation and shows results.
+</p>
+<p>Results are presented in a <a href="#racket_002dprofile_002dmode">racket-profile-mode</a> buffer, which
+also lets you quickly view the source code.
+</p>
+<p>You may evaluate expressions in the REPL. They are also profiled.
+Use <code>racket--profile-refresh</code> to see the updated results. (In
+other words a possible workflow is: <a href="#racket_002dprofile">racket-profile</a> a .rkt file,
+call one its functions in the REPL, and refresh the profile
+results.)
+</p>
+<p>Caveat: Only source files are instrumented. You may need to
+delete compiled/*.zo files.
+</p>
+<hr>
+<a name="racket_002dprofile_002dmode"></a>
+<a name="racket_002dprofile_002dmode-1"></a>
+<h4 class="subsubsection">6.1.1.4 racket-profile-mode</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-profile-mode</code> <kbd>RET</kbd> 
+</p>
+<p>Major mode for results of <a href="#racket_002dprofile">racket-profile</a>.
+</p>
+<p>\{racket-profile-mode-map}
+</p>
+
+<p>In addition to any hooks its parent mode <code>special-mode</code> might have run,
+this mode runs the hook <code>racket-profile-mode-hook</code>, as the final step
+during initialization.
+</p>
+<hr>
+<a name="racket_002dlogger"></a>
+<a name="racket_002dlogger-1"></a>
+<h4 class="subsubsection">6.1.1.5 racket-logger</h4>
+
+<p><kbd>C-c C-l</kbd> 
+</p>
+<p>Create the <a href="#racket_002dlogger_002dmode">racket-logger-mode</a> buffer and connect to logger output.
+</p>
+<p>If the <code>racket-repl-mode</code> buffer is displayed in a window, split
+that window and put the logger in the bottom window. Otherwise,
+use <code>pop-to-buffer</code>.
+</p>
+<hr>
+<a name="racket_002dlogger_002dmode"></a>
+<a name="racket_002dlogger_002dmode-1"></a>
+<h4 class="subsubsection">6.1.1.6 racket-logger-mode</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-logger-mode</code> <kbd>RET</kbd> 
+</p>
+<p>Major mode for Racket logger output.
+\&lt;racket-logger-mode-map&gt;
+The customization variable <a href="#racket_002dlogger_002dconfig">racket-logger-config</a> determines the
+levels for topics. During a session you may change topic levels
+using <code>racket-logger-topic-level</code>, bound to
+&ldquo;\[racket-logger-topic-level]&quot;.
+</p>
+<p>For more information see:
+  <a href="https://docs.racket-lang.org/reference/logging.html">https://docs.racket-lang.org/reference/logging.html</a>
+</p>
+<p>&ldquo;&lsquo;
+\{racket-logger-mode-map}
+&ldquo;&lsquo;
+</p>
+
+<p>In addition to any hooks its parent mode <code>special-mode</code> might have run,
+this mode runs the hook <code>racket-logger-mode-hook</code>, as the final step
+during initialization.
+</p>
+<hr>
+<a name="racket_002ddebug_002dmode"></a>
+<a name="racket_002ddebug_002dmode-1"></a>
+<h4 class="subsubsection">6.1.1.7 racket-debug-mode</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-debug-mode</code> <kbd>RET</kbd> 
+</p>
+<p>Minor mode for debug breaks.
+</p>
+<p>&gt; This feature is <strong><strong>EXPERIMENTAL</strong></strong>!!! It is likely to have
+&gt; significant limitations and bugs. You are welcome to open an
+&gt; issue to provide feedback. Please understand that this feature
+&gt; might never be improved &ndash; it might even be removed someday if
+&gt; it turns out to have too little value and/or too much cost.
+</p>
+<p>How to debug:
+</p>
+<ol>
+<li> &ldquo;Instrument&rdquo; code for step debugging. You can instrument
+entire files, and also individual functions.
+
+<p>a. Entire Files
+</p>
+<p>Choose <a href="#racket_002drun">racket-run</a> with two prefixes &ndash; C-u C-u C-c C-c. The
+file will be instrumented for step debugging before it is run.
+Also instrumented are files determined by the variable
+<a href="#racket_002ddebuggable_002dfiles">racket-debuggable-files</a>.
+</p>
+<p>The run will break at the first breakable position.
+</p>
+<p>Tip: After you run to completion and return to a normal
+REPL prompt, the code remains instrumented. You may enter
+expressions that evaluate instrumented code and it will
+break so you can step debug again.
+</p>
+<p>b. Function Definitions
+</p>
+<p>Put point in a function <code>define</code> form and C-u C-M-x to
+&ldquo;instrument&rdquo; the function for step debugging. Then in the
+REPL, enter an expression that causes the instrumented
+function to be run, directly or indirectly.
+</p>
+<p>You can instrument any number of functions.
+</p>
+<p>You can even instrument while stopped at a break. For
+example, to instrument a function you are about to call, so
+you can &ldquo;step into&rdquo; it:
+</p>
+<ul>
+<li> M-. a.k.a. <a href="#racket_002dvisit_002ddefinition">racket-visit-definition</a>.
+</li><li> C-u C-M-x to instrument the definition.
+</li><li> M-, a.k.a. <a href="#racket_002dunvisit">racket-unvisit</a>.
+</li><li> Continue stepping.
+</li></ul>
+<p>Limitation: Instrumenting a function ~require~d from
+another module won&rsquo;t redefine that function. Instead, it
+attempts to define an instrumented function of the same
+name, in the module the REPL is inside. The define will
+fail if it needs definitions visible only in that other
+module. In that case you&rsquo;ll probably need to use
+entire-file instrumentation as described above.
+</p>
+</li><li> When a break occurs, the <code>racket-repl-mode</code> prompt changes. In
+this debug REPL, local variables are available for you to use
+and even to &lsquo;set!&lsquo;.
+
+<p>Also, in the <code>racket-mode</code> buffer where the break is located,
+<a href="#racket_002ddebug_002dmode">racket-debug-mode</a> is enabled. This minor mode makes the
+buffer read-only, provides visual feedback &ndash; about the break
+position, local variable values, and result values &ndash; and
+provides shortcut keys:
+</p></li></ol>
+
+<p>&ldquo;&lsquo;
+\{racket-debug-mode-map}
+&ldquo;&lsquo;
+</p>
+<hr>
+<a name="Test"></a>
+<a name="Test-1"></a>
+<h4 class="subsection">6.1.2 Test</h4>
+
+
+<hr>
+<a name="racket_002dtest"></a>
+<a name="racket_002dtest-1"></a>
+<h4 class="subsubsection">6.1.2.1 racket-test</h4>
+
+<p><kbd>&lt;C-f5&gt;</kbd>  or <kbd>C-c C-t</kbd> 
+</p>
+<p>Run the <code>test</code> submodule.
+</p>
+<p>With prefix, runs with coverage instrumentation and highlights
+uncovered code.
+</p>
+<p>Put your tests in a <code>test</code> submodule. For example:
+</p>
+<p>(module+ test
+  (require rackunit)
+  (check-true #t))
+</p>
+<p>rackunit test failure messages show the location. You may use
+<code>next-error</code> to jump to the location of each failing test.
+</p>
+<p>See also:
+</p><ul>
+<li> <a href="#racket_002dfold_002dall_002dtests">racket-fold-all-tests</a>
+</li><li> <a href="#racket_002dunfold_002dall_002dtests">racket-unfold-all-tests</a>
+</li></ul>
+
+<hr>
+<a name="racket_002draco_002dtest"></a>
+<a name="racket_002draco_002dtest-1"></a>
+<h4 class="subsubsection">6.1.2.2 racket-raco-test</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-raco-test</code> <kbd>RET</kbd> 
+</p>
+<p>Do &lsquo;raco test -x &lt;file&gt;&lsquo; in <code>*shell*</code> buffer.
+To run &lt;file&gt;&rsquo;s <code>test</code> submodule.
+</p>
+<hr>
+<a name="Eval"></a>
+<a name="Eval-1"></a>
+<h4 class="subsection">6.1.3 Eval</h4>
+
+
+<hr>
+<a name="racket_002dsend_002dregion"></a>
+<a name="racket_002dsend_002dregion-1"></a>
+<h4 class="subsubsection">6.1.3.1 racket-send-region</h4>
+
+<p><kbd>C-c C-r</kbd> 
+</p>
+<p>Send the current region (if any) to the Racket REPL.
+</p>
+<hr>
+<a name="racket_002dsend_002ddefinition"></a>
+<a name="racket_002dsend_002ddefinition-1"></a>
+<h4 class="subsubsection">6.1.3.2 racket-send-definition</h4>
+
+<p><kbd>C-M-x</kbd> 
+</p>
+<p>Send the current definition to the Racket REPL.
+</p>
+<hr>
+<a name="racket_002dsend_002dlast_002dsexp"></a>
+<a name="racket_002dsend_002dlast_002dsexp-1"></a>
+<h4 class="subsubsection">6.1.3.3 racket-send-last-sexp</h4>
+
+<p><kbd>C-x C-e</kbd> 
+</p>
+<p>Send the previous sexp to the Racket REPL.
+</p>
+<p>When the previous sexp is a sexp comment the sexp itself is sent,
+without the #; prefix.
+</p>
+<hr>
+<a name="Visit"></a>
+<a name="Visit-1"></a>
+<h4 class="subsection">6.1.4 Visit</h4>
+
+
+<hr>
+<a name="racket_002dvisit_002ddefinition"></a>
+<a name="racket_002dvisit_002ddefinition-1"></a>
+<h4 class="subsubsection">6.1.4.1 racket-visit-definition</h4>
+
+<p><kbd>M-.</kbd> 
+</p>
+<p>Visit definition of symbol at point.
+</p>
+<p>Use \[racket-unvisit] to return.
+</p>
+<p>Please keep in mind the following limitations:
+</p>
+<ul>
+<li> Only finds symbols defined in the current namespace. You may
+need to <a href="#racket_002drun">racket-run</a> the current buffer, first.
+
+</li><li> Only visits the definition of module-level identifiers &ndash;
+things for which Racket&rsquo;s <code>identifier-binding</code> function returns
+information. This does include things such as
+local (nested) function definitions or <code>racket/class</code> member
+functions. To find those in the same file, you&rsquo;ll need to use a
+normal Emacs text search function like <code>isearch-forward</code>.
+
+</li><li> If the definition is found in Racket&rsquo;s &lsquo;#%kernel&lsquo; module, it
+will tell you so but won&rsquo;t visit the definition site.
+</li></ul>
+
+<hr>
+<a name="racket_002dvisit_002dmodule"></a>
+<a name="racket_002dvisit_002dmodule-1"></a>
+<h4 class="subsubsection">6.1.4.2 racket-visit-module</h4>
+
+<p><kbd>C-M-.</kbd> 
+</p>
+<p>Visit definition of module at point, e.g. net/url or &ldquo;file.rkt&rdquo;.
+</p>
+<p>Use \[racket-unvisit] to return.
+</p>
+<p>See also: <a href="#racket_002dfind_002dcollection">racket-find-collection</a>.
+</p>
+<hr>
+<a name="racket_002dunvisit"></a>
+<a name="racket_002dunvisit-1"></a>
+<h4 class="subsubsection">6.1.4.3 racket-unvisit</h4>
+
+<p><kbd>M-</kbd> 
+</p>
+<p>Return from previous <a href="#racket_002dvisit_002ddefinition">racket-visit-definition</a> or <a href="#racket_002dvisit_002dmodule">racket-visit-module</a>.
+</p>
+<hr>
+<a name="racket_002dopen_002drequire_002dpath"></a>
+<a name="racket_002dopen_002drequire_002dpath-1"></a>
+<h4 class="subsubsection">6.1.4.4 racket-open-require-path</h4>
+
+<p><kbd>C-c C-x C-f</kbd> 
+</p>
+<p>Like Dr Racket&rsquo;s Open Require Path.
+</p>
+<p>Type (or delete) characters that are part of a module path name.
+&ldquo;Fuzzy&rdquo; matches appear. For example try typing &ldquo;t/t/r&rdquo;.
+</p>
+<p>Choices are displayed in a vertical list. The current choice is
+at the top, marked with &ldquo;-&gt;&rdquo;.
+</p>
+<ul>
+<li> C-n and C-p move among the choices.
+</li><li> RET on a directory adds its contents to the choices.
+</li><li> RET on a file exits doing <code>find-file</code>.
+</li><li> C-g aborts.
+</li></ul>
+
+<p>Note: This requires Racket 6.1.1.6 or newer. Otherwise it won&rsquo;t
+error, it will just never return any matches.
+</p>
+<hr>
+<a name="racket_002dfind_002dcollection"></a>
+<a name="racket_002dfind_002dcollection-1"></a>
+<h4 class="subsubsection">6.1.4.5 racket-find-collection</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-find-collection</code> <kbd>RET</kbd> 
+</p>
+<p>Given a collection name, try to find its directory and files.
+</p>
+<p>Takes a collection name from point (or, with a prefix, prompts you).
+</p>
+<p>If only one directory is found, <code>ido-find-file-in-dir</code> lets you
+pick a file there.
+</p>
+<p>If more than one directory is found, <code>ido-completing-read</code> lets
+you pick one, then <code>ido-find-file-in-dir</code> lets you pick a file
+there.
+</p>
+<p>Note: This requires the <code>raco-find-collection</code> package to be
+installed. To install it, in <code>shell</code> enter:
+</p>
+<p>raco pkg install raco-find-collection
+</p>
+<p>Tip: This works best with <code>ido-enable-flex-matching</code> set to t.
+Also handy is the <code>flx-ido</code> package from MELPA.
+</p>
+<p>See also: <a href="#racket_002dvisit_002dmodule">racket-visit-module</a> and <a href="#racket_002dopen_002drequire_002dpath">racket-open-require-path</a>.
+</p>
+<hr>
+<a name="Learn"></a>
+<a name="Learn-1"></a>
+<h4 class="subsection">6.1.5 Learn</h4>
+
+
+<hr>
+<a name="racket_002ddescribe"></a>
+<a name="racket_002ddescribe-1"></a>
+<h4 class="subsubsection">6.1.5.1 racket-describe</h4>
+
+<p><kbd>C-c C-.</kbd> 
+</p>
+<p>Describe the identifier at point in a &lsquo;*Racket Describe*&lsquo; buffer.
+</p>
+<p>The intent is to give a quick reminder or introduction to
+something, regardless of whether it has installed documentation
+&ndash; and to do so within Emacs, without switching to a web browser.
+</p>
+<p>This buffer is also displayed when you use <code>company-mode</code> and
+press F1 or C-h in its pop up completion list.
+</p>
+<ul>
+<li> If the identifier has installed Racket documentation, then a
+simplified version of the HTML is presented in the buffer,
+including the &ldquo;blue box&rdquo;, documentation prose, and examples.
+
+</li><li> Otherwise, if the identifier is a function, then its signature
+is displayed, for example &lsquo;(name arg-1-name arg-2-name)&lsquo;. If it
+has a contract or a Typed Racket type, that is also displayed.
+</li></ul>
+
+<p>You can quit the buffer by pressing q. Also, at the bottom of the
+buffer are Emacs buttons &ndash; which you may navigate among using
+TAB, and activate using RET &ndash; for <a href="#racket_002dvisit_002ddefinition">racket-visit-definition</a> and
+<a href="#racket_002ddoc">racket-doc</a>.
+</p>
+<hr>
+<a name="racket_002ddoc"></a>
+<a name="racket_002ddoc-1"></a>
+<h4 class="subsubsection">6.1.5.2 racket-doc</h4>
+
+<p><kbd>C-c C-d</kbd> 
+</p>
+<p>View documentation of the identifier or string at point.
+</p>
+<p>Uses the default external web browser.
+</p>
+<p>If point is an identifier required in the current namespace that
+has help, opens the web browser directly at that help
+topic. (i.e. Uses the identifier variant of racket/help.)
+</p>
+<p>Otherwise, opens the &lsquo;search for a term&rsquo; page, where you can
+choose among multiple possibilities. (i.e. Uses the string
+variant of racket/help.)
+</p>
+<p>With a C-u prefix, prompts for the identifier or quoted string,
+instead of looking at point.
+</p>
+<hr>
+<a name="Edit"></a>
+<a name="Edit-1"></a>
+<h4 class="subsection">6.1.6 Edit</h4>
+
+
+<hr>
+<a name="racket_002dfold_002dall_002dtests"></a>
+<a name="racket_002dfold_002dall_002dtests-1"></a>
+<h4 class="subsubsection">6.1.6.1 racket-fold-all-tests</h4>
+
+<p><kbd>C-c C-f</kbd> 
+</p>
+<p>Fold (hide) all test submodules.
+</p>
+<hr>
+<a name="racket_002dunfold_002dall_002dtests"></a>
+<a name="racket_002dunfold_002dall_002dtests-1"></a>
+<h4 class="subsubsection">6.1.6.2 racket-unfold-all-tests</h4>
+
+<p><kbd>C-c C-u</kbd> 
+</p>
+<p>Unfold (show) all test submodules.
+</p>
+<hr>
+<a name="racket_002dtidy_002drequires"></a>
+<a name="racket_002dtidy_002drequires-1"></a>
+<h4 class="subsubsection">6.1.6.3 racket-tidy-requires</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-tidy-requires</code> <kbd>RET</kbd> 
+</p>
+<p>Make a single top-level <code>require</code>, modules sorted, one per line.
+</p>
+<p>All top-level <code>require</code> forms are combined into a single form.
+Within that form:
+</p>
+<ul>
+<li> A single subform is used for each phase level, sorted in this
+order: for-syntax, for-template, for-label, for-meta, and
+plain (phase 0).
+
+<ul>
+<li> Within each level subform, the modules are sorted:
+
+<ul>
+<li> Collection path modules &ndash; sorted alphabetically.
+
+</li><li> Subforms such as <code>only-in</code>.
+
+</li><li> Quoted relative requires &ndash; sorted alphabetically.
+</li></ul>
+</li></ul>
+</li></ul>
+
+<p>At most one module is listed per line.
+</p>
+<p>Note: This only works for requires at the top level of a source
+file using &lsquo;#lang&lsquo;. It does <strong>not</strong> work for <code>require~s inside
+~module</code> forms.
+</p>
+<p>See also: <a href="#racket_002dtrim_002drequires">racket-trim-requires</a> and <a href="#racket_002dbase_002drequires">racket-base-requires</a>.
+</p>
+<hr>
+<a name="racket_002dtrim_002drequires"></a>
+<a name="racket_002dtrim_002drequires-1"></a>
+<h4 class="subsubsection">6.1.6.4 racket-trim-requires</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-trim-requires</code> <kbd>RET</kbd> 
+</p>
+<p>Like <a href="#racket_002dtidy_002drequires">racket-tidy-requires</a> but also deletes unnecessary requires.
+</p>
+<p>Note: This only works when the source file can be evaluated with
+no errors.
+</p>
+<p>Note: This only works for requires at the top level of a source
+file using &lsquo;#lang&lsquo;. It does <strong>not</strong> work for <code>require~s inside
+~module</code> forms. Furthermore, it is not smart about <code>module+</code> or
+<code>module*</code> forms &ndash; it may delete top level requires that are
+actually needed by such submodules.
+</p>
+<p>See also: <a href="#racket_002dbase_002drequires">racket-base-requires</a>.
+</p>
+<hr>
+<a name="racket_002dbase_002drequires"></a>
+<a name="racket_002dbase_002drequires-1"></a>
+<h4 class="subsubsection">6.1.6.5 racket-base-requires</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-base-requires</code> <kbd>RET</kbd> 
+</p>
+<p>Change from &lsquo;#lang racket&lsquo; to &lsquo;#lang racket/base&lsquo;.
+</p>
+<p>Adds explicit requires for modules that are provided by <code>racket</code>
+but not by <code>racket/base</code>.
+</p>
+<p>This is a recommended optimization for Racket applications.
+Avoiding loading all of <code>racket</code> can reduce load time and memory
+footprint.
+</p>
+<p>Also, as does <a href="#racket_002dtrim_002drequires">racket-trim-requires</a>, this removes unneeded
+modules and tidies everything into a single, sorted require form.
+</p>
+<p>Note: This only works when the source file can be evaluated with
+no errors.
+</p>
+<p>Note: This only works for requires at the top level of a source
+file using &lsquo;#lang&lsquo;. It does <strong>not</strong> work for <code>require~s inside
+~module</code> forms. Furthermore, it is not smart about <code>module+</code> or
+<code>module*</code> forms &ndash; it may delete top level requires that are
+actually needed by such submodules.
+</p>
+<p>Note: Currently this only helps change &lsquo;#lang racket&lsquo; to
+&lsquo;#lang racket/base&lsquo;. It does <strong>not</strong> help with other similar conversions,
+such as changing &lsquo;#lang typed/racket&lsquo; to &lsquo;#lang typed/racket/base&lsquo;.
+</p>
+<hr>
+<a name="racket_002dindent_002dline"></a>
+<a name="racket_002dindent_002dline-1"></a>
+<h4 class="subsubsection">6.1.6.6 racket-indent-line</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-indent-line</code> <kbd>RET</kbd> 
+</p>
+<p>Indent current line as Racket code.
+</p>
+<p>This behaves like <code>lisp-indent-line</code>, except that whole-line
+comments are treated the same regardless of whether they start
+with single or double semicolons.
+</p>
+<ul>
+<li> Automatically indents forms that start with <code>begin</code> in the usual
+way that <code>begin</code> is indented.
+
+</li><li> Automatically indents forms that start with <code>def</code> or <code>with-</code> in the
+usual way that <code>define</code> is indented.
+
+</li><li> Has rules for many specific standard Racket forms.
+</li></ul>
+
+<p>To extend, use your Emacs init file to
+</p>
+<p>(put SYMBOL &lsquo;racket-indent-function INDENT)
+</p>
+<p>where <code>SYMBOL</code> is the name of the Racket form (e.g. &lsquo;&rsquo;test-case&lsquo;)
+and <code>INDENT</code> is an integer or the symbol &lsquo;&rsquo;defun&lsquo;. When <code>INDENT</code>
+is an integer, the meaning is the same as for
+<code>lisp-indent-function</code> and <code>scheme-indent-function</code>: Indent the
+first <code>n</code> arguments specially and then indent any further
+arguments like a body.
+</p>
+<p>For example in your &lsquo;.emacs&lsquo; file you could use:
+</p>
+<p>(put &lsquo;test-case &lsquo;racket-indent-function 1)
+</p>
+<p>to change the indent of <code>test-case</code> from this:
+</p>
+<p>(test-case foo
+           blah
+           blah)
+</p>
+<p>to this:
+</p>
+<p>(test-case foo
+  blah
+  blah)
+</p>
+<p>If <code>racket-indent-function</code> has no property for a symbol,
+<code>scheme-indent-function</code> is also considered (although the with-x
+indents defined by <code>scheme-mode</code> are ignored). This is only to
+help people who may have extensive <code>scheme-indent-function</code>
+settings, particularly in the form of file or dir local
+variables. Otherwise prefer <code>racket-indent-function</code>.
+</p>
+<hr>
+<a name="racket_002dsmart_002dopen_002dbracket"></a>
+<a name="racket_002dsmart_002dopen_002dbracket-1"></a>
+<h4 class="subsubsection">6.1.6.7 racket-smart-open-bracket</h4>
+
+<p><kbd>[</kbd> 
+</p>
+<p>Automatically insert a &lsquo;(&lsquo; or a &lsquo;[&lsquo; as appropriate.
+</p>
+<p>When <a href="#racket_002dsmart_002dopen_002dbracket_002denable">racket-smart-open-bracket-enable</a> is nil, this simply
+inserts &lsquo;[&lsquo;. Otherwise, this behaves like the &ldquo;Automatically
+adjust opening square brackets&rdquo; feature in Dr. Racket:
+</p>
+<p>By default, inserts a &lsquo;(&lsquo;. Inserts a &lsquo;[&lsquo; in the following cases:
+</p>
+<ul>
+<li> <code>let</code>-like bindings &ndash; forms with <code>let</code> in the name as well
+as things like <code>parameterize</code>, <code>with-handlers</code>, and
+<code>with-syntax</code>.
+
+</li><li> <code>case</code>, <code>cond</code>, <code>match</code>, <code>syntax-case</code>, <code>syntax-parse</code>, and
+<code>syntax-rules</code> clauses.
+
+</li><li> <code>for</code>-like bindings and <code>for/fold</code> accumulators.
+
+</li><li> <code>class</code> declaration syntax, such as <code>init</code> and <code>inherit</code>.
+</li></ul>
+
+<p>When the previous s-expression in a sequence is a compound
+expression, uses the same kind of delimiter.
+</p>
+<p>To force insert &lsquo;[&lsquo;, use <code>quoted-insert</code>: \[quoted-insert] [.
+</p>
+<p>Combined with <code>racket-insert-closing</code> this means that
+you can press the unshifted &lsquo;[&lsquo; and &lsquo;]&lsquo; keys to get whatever
+delimiters follow the Racket conventions for these forms. (When
+<code>electric-pair-mode</code> or <code>paredit-mode</code> is active, you need not
+even press &lsquo;]&lsquo;.
+</p>
+<hr>
+<a name="racket_002dcycle_002dparen_002dshapes"></a>
+<a name="racket_002dcycle_002dparen_002dshapes-1"></a>
+<h4 class="subsubsection">6.1.6.8 racket-cycle-paren-shapes</h4>
+
+<p><kbd>C-c C-p</kbd> 
+</p>
+<p>Cycle the sexpr among () [] {}.
+</p>
+<hr>
+<a name="racket_002dbackward_002dup_002dlist"></a>
+<a name="racket_002dbackward_002dup_002dlist-1"></a>
+<h4 class="subsubsection">6.1.6.9 racket-backward-up-list</h4>
+
+<p><kbd>C-M-u</kbd> 
+</p>
+<p>Like <code>backward-up-list</code> but works when point is in a string or comment.
+</p>
+<p>Typically you should not use this command in Emacs Lisp &ndash;
+especially not repeatedly. Instead, initially use
+<code>racket--escape-string-or-comment</code> to move to the start of a
+string or comment, if any, then use normal <code>backward-up-list</code>
+repeatedly.
+</p>
+<hr>
+<a name="racket_002dcheck_002dsyntax_002dmode"></a>
+<a name="racket_002dcheck_002dsyntax_002dmode-1"></a>
+<h4 class="subsubsection">6.1.6.10 racket-check-syntax-mode</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-check-syntax-mode</code> <kbd>RET</kbd> 
+</p>
+<p>Analyze the buffer and annotate with information.
+</p>
+<p>The buffer becomes read-only until you exit this minor mode.
+However you may navigate the usual ways. When point is on a
+definition or use, related items are highlighted and
+information is displayed in the echo area. You may also use
+special commands to navigate among the definition and its uses.
+</p>
+<p>&ldquo;&lsquo;
+\{racket-check-syntax-mode-map}
+&ldquo;&lsquo;
+</p>
+<hr>
+<a name="racket_002dunicode_002dinput_002dmethod_002denable"></a>
+<a name="racket_002dunicode_002dinput_002dmethod_002denable-1"></a>
+<h4 class="subsubsection">6.1.6.11 racket-unicode-input-method-enable</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-unicode-input-method-enable</code> <kbd>RET</kbd> 
+</p>
+<p>Set input method to <code>racket-unicode</code>.
+</p>
+<p>The <code>racket-unicode</code> input method lets you easily type various
+Unicode symbols that might be useful when writing Racket
+code.
+</p>
+<p>To automatically enable the <code>racket-unicode</code> input method in
+<code>racket-mode</code> buffers use &lsquo;M-x customize-variable &lt;RET&gt;
+racket-mode-hook&lsquo; or put the following code in your Emacs init
+file:
+</p>
+<p>(add-hook &lsquo;racket-mode-hook #&rsquo;racket-unicode-input-method-enable)
+</p>
+<p>Likewise for <code>racket-repl-mode</code> buffers:
+</p>
+<p>(add-hook &lsquo;racket-repl-mode-hook #&rsquo;racket-unicode-input-method-enable)
+</p>
+<p>To temporarily enable this input method for a single buffer you
+can use &lsquo;M-x racket-unicode-input-method-enable&lsquo;.
+</p>
+<p>Use &lsquo;C-\&lsquo; to toggle the input method.
+</p>
+<p>When the <code>racket-unicode</code> input method is active, you can for
+example type <code>All</code> and it is immediately replaced with &lsquo;∀&lsquo;. A few
+other examples:
+</p>
+<p>omega     ω
+x<em>_1</em>       x₁
+x<em>^1</em>       x¹
+</p><table>
+<tr><td>A</td><td>𝔸</td></tr>
+</table>
+<p>test&ndash;&gt;&gt;E test&ndash;&gt;&gt;∃ (racket/redex)
+</p>
+<p>To see a table of all key sequences use &lsquo;M-x
+describe-input-method &lt;RET&gt; racket-unicode&lsquo;.
+</p>
+<p>If you don’t like the highlighting of partially matching tokens you
+can turn it off by setting <code>input-method-highlight-flag</code> to nil via
+&lsquo;M-x customize-variable&lsquo;.
+</p>
+<hr>
+<a name="racket_002dalign"></a>
+<a name="racket_002dalign-1"></a>
+<h4 class="subsubsection">6.1.6.12 racket-align</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-align</code> <kbd>RET</kbd> 
+</p>
+<p>Align values in the same column.
+</p>
+<p>Useful for binding forms like <code>let</code> and <code>parameterize</code>,
+conditionals like <code>cond</code> and <code>match</code>, association lists, and any
+series of couples like the arguments to <code>hash</code>.
+</p>
+<p>Before choosing this command, put point on the first of a series
+of &ldquo;couples&rdquo;. A couple is:
+</p>
+<ul>
+<li> A list of two or more sexprs: &lsquo;[sexpr val sexpr &hellip;]&lsquo;
+</li><li> Two sexprs: &lsquo;sexpr val&lsquo;.
+</li></ul>
+
+<p>Each <code>val</code> moves to the same column and is
+<code>prog-indent-sexp</code>-ed (in case it is a multi-line form).
+</p>
+<p>For example with point on the &lsquo;[&lsquo; before <code>a</code>:
+</p>
+<p>Before             After
+</p>
+<p>(let ([a 12]       (let ([a   12]
+      [bar 23])          [bar 23])
+  &hellip;.)              &hellip;.)
+</p>
+<p>&lsquo;([a . 12]         &rsquo;([a   . 12]
+  [bar . 23])        [bar . 23])
+</p>
+<p>(cond [a? #t]      (cond [a?   #t]
+      [b? (f x           [b?   (f x
+             y)]                  y)]
+      [else #f])         [else #f])
+</p>
+<p>Or with point on the &lsquo;&rsquo;&lsquo; before <code>a</code>:
+</p>
+<p>(list &lsquo;a 12        (list &lsquo;a   12
+      &lsquo;bar 23)           &lsquo;bar 23)
+</p>
+<p>If more than one couple is on the same line, none are aligned,
+because it is unclear where the value column should be. For
+example the following form will not change; <a href="#racket_002dalign">racket-align</a> will
+display an error message:
+</p>
+<p>(let ([a 0][b 1]
+      [c 2])       error; unchanged
+  &hellip;.)
+</p>
+<p>When a couple&rsquo;s sexprs start on different lines, that couple is
+ignored. Other, single-line couples in the series are aligned as
+usual. For example:
+</p>
+<p>(let ([foo         (let ([foo
+       0]                 0]
+      [bar 1]            [bar 1]
+      [x 2])             [x   2])
+  &hellip;.)              &hellip;.)
+</p>
+<p>See also: <a href="#racket_002dunalign">racket-unalign</a>.
+</p>
+<hr>
+<a name="racket_002dunalign"></a>
+<a name="racket_002dunalign-1"></a>
+<h4 class="subsubsection">6.1.6.13 racket-unalign</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-unalign</code> <kbd>RET</kbd> 
+</p>
+<p>The opposite of <a href="#racket_002dalign">racket-align</a>.
+</p>
+<p>Effectively does M-x <code>just-one-space</code> and <code>prog-indent-sexp</code> for
+each couple&rsquo;s value.
+</p>
+<hr>
+<a name="racket_002dcomplete_002dat_002dpoint"></a>
+<a name="racket_002dcomplete_002dat_002dpoint-1"></a>
+<h4 class="subsubsection">6.1.6.14 racket-complete-at-point</h4>
+
+<p>Default value for the variable <code>completion-at-point-functions</code>.
+</p>
+<p>Completion candidates are drawn from the namespace symbols
+resulting from the most recent <a href="#racket_002drun">racket-run</a> of each .rkt file. If
+a file has never been run, candidates default to values also used
+for font-lock &ndash; an assortment of symbols from common Racket
+modules such as <code>racket</code>, <code>typed/racket</code>, and <code>syntax/parse</code>.
+</p>
+<p>Returns extra :company-doc-buffer and :company-location
+properties for use by the <code>company-mode</code> backend <code>company-capf</code>
+&ndash; but not :company-docsig, because it is frequently impossible
+to supply this quickly enough or at all.
+</p>
+<hr>
+<a name="Macro-expand"></a>
+<a name="Macro-expand-1"></a>
+<h4 class="subsection">6.1.7 Macro expand</h4>
+
+
+<hr>
+<a name="racket_002dstepper_002dmode"></a>
+<a name="racket_002dstepper_002dmode-1"></a>
+<h4 class="subsubsection">6.1.7.1 racket-stepper-mode</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-stepper-mode</code> <kbd>RET</kbd> 
+</p>
+<p>Major mode for Racket stepper output.
+</p>
+<p>Used by the commands <a href="#racket_002dexpand_002dfile">racket-expand-file</a>,
+<a href="#racket_002dexpand_002ddefinition">racket-expand-definition</a>, <a href="#racket_002dexpand_002dregion">racket-expand-region</a>, and
+<a href="#racket_002dexpand_002dlast_002dsexp">racket-expand-last-sexp</a>.
+</p>
+<p>\&lt;racket-stepper-mode-map&gt;
+</p>
+<p>&ldquo;&lsquo;
+\{racket-stepper-mode-map}
+&ldquo;&lsquo;
+</p>
+
+<p>In addition to any hooks its parent mode <code>special-mode</code> might have run,
+this mode runs the hook <code>racket-stepper-mode-hook</code>, as the final step
+during initialization.
+</p>
+<hr>
+<a name="racket_002dexpand_002dfile"></a>
+<a name="racket_002dexpand_002dfile-1"></a>
+<h4 class="subsubsection">6.1.7.2 racket-expand-file</h4>
+
+<p><kbd>C-c C-e f</kbd> 
+</p>
+<p>Expand the <code>racket-mode</code> buffer&rsquo;s file in <a href="#racket_002dstepper_002dmode">racket-stepper-mode</a>.
+</p>
+<p>Uses the <code>macro-debugger</code> package to do the expansion.
+</p>
+<p>You do need to <a href="#racket_002drun">racket-run</a> the file first; the namespace
+active in the REPL is not used.
+</p>
+<p>If the file is non-trivial and/or is not compiled to a .zo
+bytecode file, then it might take many seconds before the
+original form is displayed and you can start stepping.
+</p>
+<p>With a prefix, also expands syntax from racket/base &ndash; which can
+result in very many expansion steps.
+</p>
+<hr>
+<a name="racket_002dexpand_002dregion"></a>
+<a name="racket_002dexpand_002dregion-1"></a>
+<h4 class="subsubsection">6.1.7.3 racket-expand-region</h4>
+
+<p><kbd>C-c C-e r</kbd> 
+</p>
+<p>Expand the active region using <a href="#racket_002dstepper_002dmode">racket-stepper-mode</a>.
+</p>
+<p>Uses Racket&rsquo;s <code>expand-once</code> in the namespace from the most recent
+<a href="#racket_002drun">racket-run</a>.
+</p>
+<hr>
+<a name="racket_002dexpand_002ddefinition"></a>
+<a name="racket_002dexpand_002ddefinition-1"></a>
+<h4 class="subsubsection">6.1.7.4 racket-expand-definition</h4>
+
+<p><kbd>C-c C-e x</kbd> 
+</p>
+<p>Expand the definition around point using <a href="#racket_002dstepper_002dmode">racket-stepper-mode</a>.
+</p>
+<p>Uses Racket&rsquo;s <code>expand-once</code> in the namespace from the most recent
+<a href="#racket_002drun">racket-run</a>.
+</p>
+<hr>
+<a name="racket_002dexpand_002dlast_002dsexp"></a>
+<a name="racket_002dexpand_002dlast_002dsexp-1"></a>
+<h4 class="subsubsection">6.1.7.5 racket-expand-last-sexp</h4>
+
+<p><kbd>C-c C-e e</kbd> 
+</p>
+<p>Expand the sexp before point using <a href="#racket_002dstepper_002dmode">racket-stepper-mode</a>.
+</p>
+<p>Uses Racket&rsquo;s <code>expand-once</code> in the namespace from the most recent
+<a href="#racket_002drun">racket-run</a>.
+</p>
+<hr>
+<a name="Other"></a>
+<a name="Other-1"></a>
+<h4 class="subsection">6.1.8 Other</h4>
+
+
+<hr>
+<a name="racket_002dmode_002dstart_002dfaster"></a>
+<a name="racket_002dmode_002dstart_002dfaster-1"></a>
+<h4 class="subsubsection">6.1.8.1 racket-mode-start-faster</h4>
+
+<p><kbd>M-x</kbd>  <code>racket-mode-start-faster</code> <kbd>RET</kbd> 
+</p>
+<p>Compile racket-mode&rsquo;s .rkt files for faster startup.
+</p>
+<p>racket-mode is implemented as an Emacs Lisp &ldquo;front end&rdquo; that
+talks to a Racket process &ldquo;back end&rdquo;. Because racket-mode is
+delivered as an Emacs package instead of a Racket package,
+installing it does do the &lsquo;raco setup&lsquo; that is normally
+done for Racket packages.
+</p>
+<p>This command will do a &lsquo;raco make&lsquo; of racket-mode&rsquo;s .rkt files,
+creating bytecode files in <code>compiled/</code> subdirectories. As a
+result, when a <a href="#racket_002drun">racket-run</a> or <code>racket-repl</code> command must start
+the Racket process, it will start faster.
+</p>
+<p>If you run this command, , you should run it after:
+</p>
+<ul>
+<li> Installing an updated version of racket-mode. Otherwise, you
+might lose some of the speed-up.
+
+</li><li> Installing a new version of Racket and/or changing the value of
+the variable <a href="#racket_002dprogram">racket-program</a>. Otherwise, you might get an
+error message due to the bytecode being different versions.
+</li></ul>
+
+<hr>
+<a name="Variables"></a>
+<a name="Variables-1"></a>
+<h3 class="section">6.2 Variables</h3>
+
+
+<hr>
+<a name="General"></a>
+<a name="General-1"></a>
+<h4 class="subsection">6.2.1 General</h4>
+
+
+<hr>
+<a name="racket_002dprogram"></a>
+<a name="racket_002dprogram-1"></a>
+<h4 class="subsubsection">6.2.1.1 racket-program</h4>
+
+<p>Pathname of the racket executable.
+</p>
+<hr>
+<a name="racket_002dcommand_002dport"></a>
+<a name="racket_002dcommand_002dport-1"></a>
+<h4 class="subsubsection">6.2.1.2 racket-command-port</h4>
+
+<p>Port number for Racket REPL command server.
+</p>
+<hr>
+<a name="racket_002dcommand_002dstartup"></a>
+<a name="racket_002dcommand_002dstartup-1"></a>
+<h4 class="subsubsection">6.2.1.3 racket-command-startup</h4>
+
+<p>What to do when the REPL and command server aren’t available to send a command.
+</p>
+<ul>
+<li> nil: Show an error message explaining that you might need to
+start or restart the Racket REPL.
+
+</li><li> positive number: Automatically try to start the REPL and wait
+that number of seconds for command server to become
+available.
+</li></ul>
+
+<hr>
+<a name="racket_002dcommand_002dtimeout"></a>
+<a name="racket_002dcommand_002dtimeout-1"></a>
+<h4 class="subsubsection">6.2.1.4 racket-command-timeout</h4>
+
+<p>How many seconds to wait for Racket REPL command server responses.
+</p>
+<hr>
+<a name="racket_002dmemory_002dlimit"></a>
+<a name="racket_002dmemory_002dlimit-1"></a>
+<h4 class="subsubsection">6.2.1.5 racket-memory-limit</h4>
+
+<p>Terminate the Racket process if memory use exceeds this value in MB.
+Changes to this value take effect upon the next ‘racket-run’. A value
+of 0 means no limit.
+</p>
+<p>Caveat: This uses Racket’s ‘custodian-limit-memory‘, which does
+not enforce the limit exactly. Instead, the program will be
+terminated upon the first garbage collection where memory exceeds
+the limit (maybe by a significant amount).
+</p>
+<hr>
+<a name="racket_002derror_002dcontext"></a>
+<a name="racket_002derror_002dcontext-1"></a>
+<h4 class="subsubsection">6.2.1.6 racket-error-context</h4>
+
+<p>The level of context used for ‘racket-run’ error stack traces.
+</p>
+<p>Each level improves stack trace information, but causes your
+program to run more slowly.
+</p>
+<ul>
+<li> ’low corresponds to ‘compile-context-preservation-enabled‘
+‘#f‘.
+
+</li><li> ’medium corresponds to ‘compile-context-preservation-enabled‘
+‘#t‘, which disables some optimizations like inlining.
+
+</li><li> ’high corresponds to ‘compile-context-preservation-enabled‘
+‘#t‘ and to use of ‘errortrace‘, which heavily instruments
+your code and therefore may be significantly slower.
+</li></ul>
+
+<p>Tip: Regardless of this setting, you can enable ’high errortrace
+for a specific ‘racket-run’ using a C-u prefix. This lets you
+normally run with a faster setting, and temporarily re-run to get
+a more-helpful error message.
+</p>
+<hr>
+<a name="racket_002dretry_002das_002dskeleton"></a>
+<a name="racket_002dretry_002das_002dskeleton-1"></a>
+<h4 class="subsubsection">6.2.1.7 racket-retry-as-skeleton</h4>
+
+<p>Retry a &ldquo;skeleton&rdquo; of files with errors, for identifier names?
+</p>
+<p>When true: If your source file has an error, a &ldquo;skeleton&rdquo; of
+your file is evaluated to get identifiers from module languages,
+‘require‘s, and definitions. That way, things like completion and
+‘racket-describe’ are more likely to work while you edit the file
+to fix the error.
+</p>
+<p>Otherwise, you’ll have only identifiers provided by racket/base,
+until you fix the error and run again.
+</p>
+<p>You might want to disable this if you work with files that take a
+very long time to expand &ndash; because this feature needs to expand
+again when there is an error.
+</p>
+<hr>
+<a name="racket_002duser_002dcommand_002dline_002darguments"></a>
+<a name="racket_002duser_002dcommand_002dline_002darguments-1"></a>
+<h4 class="subsubsection">6.2.1.8 racket-user-command-line-arguments</h4>
+
+<p>List of command-line arguments to supply to your Racket program.
+</p>
+<p>Accessible in your Racket program in the usual way &ndash; the
+parameter ‘current-command-line-arguments‘ and friends.
+</p>
+<p>This is an Emacs buffer-local variable &ndash; convenient to set as a
+file local variable. For example at the end of your .rkt file:
+</p>
+<p>;; Local Variables:
+;; racket-user-command-line-arguments: (&ldquo;-f&rdquo; &ldquo;bar&rdquo;)
+;; End:
+</p>
+<p>Set this way the value must be an unquoted list of strings such
+as:
+</p>
+<p>(&ldquo;-f&rdquo; &ldquo;bar&rdquo;)
+</p>
+<p>but NOT:
+</p>
+<p>’(&ldquo;-f&rdquo; &ldquo;bar&rdquo;)
+(list &ldquo;-f&rdquo; &ldquo;bar&rdquo;)
+</p>
+<hr>
+<a name="racket_002dpath_002dfrom_002demacs_002dto_002dracket_002dfunction"></a>
+<a name="racket_002dpath_002dfrom_002demacs_002dto_002dracket_002dfunction-1"></a>
+<h4 class="subsubsection">6.2.1.9 racket-path-from-emacs-to-racket-function</h4>
+
+<p>A function used to transform Emacs Lisp pathnames before supplying to the Racket back end.
+</p>
+<p>If you run Emacs on Windows Subsystem for Linux, and want to run
+Racket programs using Windows Racket.exe rather than Linux
+racket, you can set this to ‘racket-wsl-to-windows’. In that case
+you probably also want to customize the &ldquo;reverse&rdquo;:
+‘racket-path-from-racket-to-emacs-function’.
+</p>
+<hr>
+<a name="racket_002dpath_002dfrom_002dracket_002dto_002demacs_002dfunction"></a>
+<a name="racket_002dpath_002dfrom_002dracket_002dto_002demacs_002dfunction-1"></a>
+<h4 class="subsubsection">6.2.1.10 racket-path-from-racket-to-emacs-function</h4>
+
+<p>A function used to transform pathnames supplied by the Racket back end before using them in Emacs.
+</p>
+<p>The default on Windows replaces back with forward slashes. The
+default elsewhere is ‘identity’.
+</p>
+<p>If you run Emacs on Windows Subsystem for Linux, and want to run
+Racket programs using Windows Racket.exe rather than Linux
+racket, you can set this to ‘racket-windows-to-wsl’. In that case
+you probably also want to customize the &ldquo;reverse&rdquo;:
+‘racket-path-from-emacs-to-racket-function’.
+</p>
+<hr>
+<a name="REPL"></a>
+<a name="REPL-1"></a>
+<h4 class="subsection">6.2.2 REPL</h4>
+
+
+<hr>
+<a name="racket_002dhistory_002dfilter_002dregexp"></a>
+<a name="racket_002dhistory_002dfilter_002dregexp-1"></a>
+<h4 class="subsubsection">6.2.2.1 racket-history-filter-regexp</h4>
+
+<p>Input matching this regexp are not saved on the history list.
+Defaults to a regexp ignoring all inputs of 0, 1, or 2 letters.
+</p>
+<hr>
+<a name="racket_002dimages_002dinline"></a>
+<a name="racket_002dimages_002dinline-1"></a>
+<h4 class="subsubsection">6.2.2.2 racket-images-inline</h4>
+
+<p>Whether to display inline images in the REPL.
+</p>
+<hr>
+<a name="racket_002dimages_002dkeep_002dlast"></a>
+<a name="racket_002dimages_002dkeep_002dlast-1"></a>
+<h4 class="subsubsection">6.2.2.3 racket-images-keep-last</h4>
+
+<p>How many images to keep in the image cache.
+</p>
+<hr>
+<a name="racket_002dimages_002dsystem_002dviewer"></a>
+<a name="racket_002dimages_002dsystem_002dviewer-1"></a>
+<h4 class="subsubsection">6.2.2.4 racket-images-system-viewer</h4>
+
+<p>Which system image viewer program to invoke upon M-x
+ ‘racket-view-last-image’.
+</p>
+<hr>
+<a name="racket_002dpretty_002dprint"></a>
+<a name="racket_002dpretty_002dprint-1"></a>
+<h4 class="subsubsection">6.2.2.5 racket-pretty-print</h4>
+
+<p>Use pretty-print instead of print in REPL.
+</p>
+<hr>
+<a name="Otherx"></a>
+<a name="Other-2"></a>
+<h4 class="subsection">6.2.3 Other</h4>
+
+
+<hr>
+<a name="racket_002dindent_002dcurly_002das_002dsequence"></a>
+<a name="racket_002dindent_002dcurly_002das_002dsequence-1"></a>
+<h4 class="subsubsection">6.2.3.1 racket-indent-curly-as-sequence</h4>
+
+<p>Indent ‘{}‘ with items aligned with the head item?
+This is indirectly disabled if ‘racket-indent-sequence-depth’ is 0.
+This is safe to set as a file-local variable.
+</p>
+<hr>
+<a name="racket_002dindent_002dsequence_002ddepth"></a>
+<a name="racket_002dindent_002dsequence_002ddepth-1"></a>
+<h4 class="subsubsection">6.2.3.2 racket-indent-sequence-depth</h4>
+
+<p>To what depth should ‘racket-indent-line’ search.
+This affects the indentation of forms like ‘‘ ’()‘ ‘() #() ‘‘ &ndash;
+and ‘{}‘ if ‘racket-indent-curly-as-sequence’ is t &ndash; but not
+‘‘ #’() #‘() ,() ,@() ‘‘. A zero value disables, giving the
+normal indent behavior of DrRacket or Emacs ‘lisp-mode’ derived
+modes like ‘scheme-mode’. Setting this to a high value can make
+indentation noticeably slower. This is safe to set as a
+file-local variable.
+</p>
+<hr>
+<a name="racket_002dpretty_002dlambda"></a>
+<a name="racket_002dpretty_002dlambda-1"></a>
+<h4 class="subsubsection">6.2.3.3 racket-pretty-lambda</h4>
+
+<p>Display lambda keywords using λ. This is DEPRECATED.
+Instead use ‘prettify-symbols-mode’ in newer verisons of Emacs,
+or, use ‘racket-insert-lambda’ to insert actual λ characters.
+</p>
+<hr>
+<a name="racket_002dsmart_002dopen_002dbracket_002denable"></a>
+<a name="racket_002dsmart_002dopen_002dbracket_002denable-1"></a>
+<h4 class="subsubsection">6.2.3.4 racket-smart-open-bracket-enable</h4>
+
+<p>Use ‘racket-smart-open-bracket’ when ‘[‘ is pressed?
+</p>
+<hr>
+<a name="racket_002dlogger_002dconfig"></a>
+<a name="racket_002dlogger_002dconfig-1"></a>
+<h4 class="subsubsection">6.2.3.5 racket-logger-config</h4>
+
+<p>Configuration of ‘racket-logger-mode’ topics and levels
+</p>
+<p>The topic ’* respresents the default level used for topics not
+assigned a level. Otherwise, the topic symbols are the same as
+used by Racket’s ‘define-logger‘.
+</p>
+<p>The levels are those used by Racket’s logging system: ’debug,
+’info, ’warning, ’error, ’fatal.
+</p>
+<p>For more information see:
+  <a href="https://docs.racket-lang.org/reference/logging.html">https://docs.racket-lang.org/reference/logging.html</a>
+</p>
+<p>The default value sets some known &ldquo;noisy&rdquo; topics to be one
+level quieter. That way you can set the ’* topic to a level like
+’debug and not get overhwelmed by these noisy topics.
+</p>
+<hr>
+<a name="Experimental-debugger"></a>
+<a name="Experimental-debugger-1"></a>
+<h4 class="subsection">6.2.4 Experimental debugger</h4>
+
+
+<hr>
+<a name="racket_002ddebuggable_002dfiles"></a>
+<a name="racket_002ddebuggable_002dfiles-1"></a>
+<h4 class="subsubsection">6.2.4.1 racket-debuggable-files</h4>
+
+<p>Used to tell ‘racket-run’ what files may be instrumented for debugging.
+Must be a list of strings that are pathnames, such as from
+‘racket&ndash;buffer-file-name’, -or-, a function that returns such a
+list given the pathname of the file being run. If any path
+strings are relative, they are made absolute using
+‘expand-file-name’ with the directory of the file being run. The
+symbol ’run-file may be supplied in the list; it will be replaced
+with the pathname of the file being run. Safe to set as a
+file-local variable.
+</p>
+<hr>
+<a name="Faces"></a>
+<a name="Faces-1"></a>
+<h3 class="section">6.3 Faces</h3>
+
+
+<hr>
+<a name="racket_002dkeyword_002dargument_002dface"></a>
+<a name="racket_002dkeyword_002dargument_002dface-1"></a>
+<h4 class="subsection">6.3.1 racket-keyword-argument-face</h4>
+
+<p>Face for ‘#:keyword‘ arguments.
+</p>
+<hr>
+<a name="racket_002dselfeval_002dface"></a>
+<a name="racket_002dselfeval_002dface-1"></a>
+<h4 class="subsection">6.3.2 racket-selfeval-face</h4>
+
+<p>Face for self-evaluating expressions like numbers, symbols, strings.
+</p>
+<hr>
+<a name="racket_002dhere_002dstring_002dface"></a>
+<a name="racket_002dhere_002dstring_002dface-1"></a>
+<h4 class="subsection">6.3.3 racket-here-string-face</h4>
+
+<p>Face for here strings.
+</p>
+<hr>
+<a name="racket_002dcheck_002dsyntax_002ddef_002dface"></a>
+<a name="racket_002dcheck_002dsyntax_002ddef_002dface-1"></a>
+<h4 class="subsection">6.3.4 racket-check-syntax-def-face</h4>
+
+<p>Face ‘racket-check-syntax’ uses to highlight definitions.
+</p>
+<hr>
+<a name="racket_002dcheck_002dsyntax_002duse_002dface"></a>
+<a name="racket_002dcheck_002dsyntax_002duse_002dface-1"></a>
+<h4 class="subsection">6.3.5 racket-check-syntax-use-face</h4>
+
+<p>Face ‘racket-check-syntax’ uses to highlight uses.
+</p>
+<hr>
+<a name="racket_002dlogger_002dconfig_002dface"></a>
+<a name="racket_002dlogger_002dconfig_002dface-1"></a>
+<h4 class="subsection">6.3.6 racket-logger-config-face</h4>
+
+<p>Face for ‘racket-logger-mode’ configuration.
+</p>
+<hr>
+<a name="racket_002dlogger_002dtopic_002dface"></a>
+<a name="racket_002dlogger_002dtopic_002dface-1"></a>
+<h4 class="subsection">6.3.7 racket-logger-topic-face</h4>
+
+<p>Face for ‘racket-logger-mode’ topics.
+</p>
+<hr>
+<a name="racket_002dlogger_002dfatal_002dface"></a>
+<a name="racket_002dlogger_002dfatal_002dface-1"></a>
+<h4 class="subsection">6.3.8 racket-logger-fatal-face</h4>
+
+<p>Face for ‘racket-logger-mode’ fatal level.
+</p>
+<hr>
+<a name="racket_002dlogger_002derror_002dface"></a>
+<a name="racket_002dlogger_002derror_002dface-1"></a>
+<h4 class="subsection">6.3.9 racket-logger-error-face</h4>
+
+<p>Face for ‘racket-logger-mode’ error level.
+</p>
+<hr>
+<a name="racket_002dlogger_002dwarning_002dface"></a>
+<a name="racket_002dlogger_002dwarning_002dface-1"></a>
+<h4 class="subsection">6.3.10 racket-logger-warning-face</h4>
+
+<p>Face for ‘racket-logger-mode’ warning level.
+</p>
+<hr>
+<a name="racket_002dlogger_002dinfo_002dface"></a>
+<a name="racket_002dlogger_002dinfo_002dface-1"></a>
+<h4 class="subsection">6.3.11 racket-logger-info-face</h4>
+
+<p>Face for ‘racket-logger-mode’ info level.
+</p>
+<hr>
+<a name="racket_002dlogger_002ddebug_002dface"></a>
+<a name="racket_002dlogger_002ddebug_002dface-1"></a>
+<h4 class="subsection">6.3.12 racket-logger-debug-face</h4>
+
+<p>Face for ‘racket-logger-mode’ debug level.
+</p>
+<hr>
+<a name="Index"></a>
+<a name="Index-1"></a>
+<h2 class="unnumbered">Index</h2>
+
+
+<hr>
+
+
+
+</body>
+</html>

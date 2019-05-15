@@ -23,28 +23,13 @@
 (require 'cl-lib)
 (require 's)
 
-;;; Top
-
-(defun racket-make-doc/write-reference-file ()
-  (interactive)
-  (with-temp-buffer
-    (insert (racket-make-doc/reference))
-    (write-region nil nil
-                  (expand-file-name "Reference.md" racket--el-source-dir)
-                  nil)))
-
-(defun racket-make-doc/reference ()
-  (let ((text-quoting-style 'grave))
-    (concat "# Reference\n\n"
-            (racket-make-doc/toc)
-            "# Commands\n\n"
-            (racket-make-doc/commands)
-            "# Variables\n\n"
-            "> Note: You may also set these via Customize.\n\n"
-            (racket-make-doc/variables)
-            "# Faces\n\n"
-            "> Note: You may also set these via Customize.\n\n"
-            (racket-make-doc/faces))))
+(defun racket-make-doc ()
+  (find-file "reference.org")
+  (delete-region (point-min) (point-max))
+  (insert (racket-make-doc/commands))
+  (insert (racket-make-doc/variables))
+  (insert (racket-make-doc/faces))
+  (save-buffer))
 
 ;;; Commands
 
@@ -100,45 +85,44 @@
 
 (defun racket-make-doc/commands ()
   (apply #'concat
-         (mapcar #'racket-make-doc/command racket-make-doc/commands)))
+         (cons "* Commands\n\n"
+               (mapcar #'racket-make-doc/command racket-make-doc/commands))))
 
 (defun racket-make-doc/command (s)
   (if (stringp s)
-      (format "## %s\n\n" s)
-    (concat (format "### %s\n" s)
+      (format "** %s\n\n" s)
+    (concat (format "*** %s\n" s)
             (and (interactive-form s)
                  (racket-make-doc/bindings-as-kbd s))
             (racket-make-doc/tweak-quotes
              (racket-make-doc/linkify
-              (or (documentation s) "No documentation.\n\n")))
+              ;; Supply RAW t to leave e.g. \\{racket-profile-mode-map} in string.
+              ;; We'll call substitute-command-keys ourselves, and produce something
+              ;; nice for org => texi => {info html}
+              (or (documentation s t) "No documentation.\n\n")))
             "\n\n")))
 
 (defun racket-make-doc/bindings-as-kbd (symbol)
   (let* ((bindings (racket-make-doc/bindings symbol))
-         (strs (and bindings
-                    (cl-remove-if-not
-                     #'identity
-                     (mapcar (lambda (binding)
-                               (unless (eq (aref binding 0) 'menu-bar)
-                                 (format "<kbd>%s</kbd>"
-                                         (racket-make-doc/html-escape
-                                          (key-description binding)))))
-                             bindings))))
+         (strs (and
+                bindings
+                (cl-remove-if-not
+                 #'identity
+                 (mapcar (lambda (binding)
+                           (unless (eq (aref binding 0) 'menu-bar)
+                             (let ((desc (key-description binding)))
+                               ;; I don't know how to escape { or }
+                               ;; for texi
+                               (unless (string-match-p "[{}]" desc)
+                                 (format "{{{kbd(%s)}}}" desc)))))
+                         bindings))))
          (str (if strs
                   (mapconcat #'identity strs " or ")
-                (format "<kbd>M-x %s</kbd>" symbol))))
+                (format "{{{kbd(M-x)}}} ~%s~ {{{kbd(RET)}}}" symbol))))
     (concat str "\n\n")))
 
 (defun racket-make-doc/bindings (symbol)
   (where-is-internal symbol racket-mode-map))
-
-(defun racket-make-doc/html-escape (str)
-  (with-temp-buffer
-    (insert str)
-    (format-replace-strings '(("&" . "&amp;")
-                              ("<" . "&lt;")
-                              (">" . "&gt;")))
-    (buffer-substring-no-properties (point-min) (point-max))))
 
 ;;; Variables
 
@@ -172,12 +156,13 @@
 
 (defun racket-make-doc/variables ()
   (apply #'concat
-         (mapcar #'racket-make-doc/variable racket-make-doc/variables)))
+         (cons "* Variables\n\n"
+               (mapcar #'racket-make-doc/variable racket-make-doc/variables))))
 
 (defun racket-make-doc/variable (s)
   (if (stringp s)
-      (format "## %s\n\n" s)
-    (concat (format "### %s\n" s)
+      (format "** %s\n\n" s)
+    (concat (format "*** %s\n" s)
             (racket-make-doc/tweak-quotes
              (racket-make-doc/linkify
               (or (documentation-property s 'variable-documentation)
@@ -203,35 +188,16 @@
 
 (defun racket-make-doc/faces ()
   (apply #'concat
-         (mapcar #'racket-make-doc/face racket-make-doc/faces)))
+         (cons "* Faces\n\n"
+               (mapcar #'racket-make-doc/face racket-make-doc/faces))))
 
 (defun racket-make-doc/face (symbol)
-  (concat (format "### %s\n" symbol)
+  (concat (format "** %s\n" symbol)
           (racket-make-doc/tweak-quotes
            (racket-make-doc/linkify
             (or (documentation-property symbol 'face-documentation)
                 "No documentation.\n\n")))
           "\n\n"))
-
-;;; TOC
-
-(defun racket-make-doc/toc ()
-  (concat "- [Commands](#commands)\n"
-          (racket-make-doc/subheads racket-make-doc/commands)
-          "- [Variables](#variables)\n"
-          (racket-make-doc/subheads racket-make-doc/variables)
-          "- [Faces](#faces)\n"
-          "\n"))
-
-(defun racket-make-doc/subheads (xs)
-  (apply #'concat
-         (mapcar #'racket-make-doc/subhead
-                 (cl-remove-if-not #'stringp xs))))
-
-(defun racket-make-doc/subhead (x)
-  (format "    - [%s](#%s)\n"
-          x
-          (s-dashed-words x)))
 
 ;;; Utility
 
@@ -244,25 +210,29 @@
                                                           (syntax symbol))))
                                   ?\')
                               nil t)
-      (let ((name (buffer-substring-no-properties (match-beginning 1)
-                                                  (match-end 1))))
-        (replace-match (format "[`%s`](#%s)" name name)
-                       nil nil)))
+      (let* ((name (buffer-substring-no-properties (match-beginning 1)
+                                                   (match-end 1)))
+             (sym (intern-soft name)))
+        (when (or (member sym racket-make-doc/commands)
+                  (member sym racket-make-doc/variables)
+                  (member sym racket-make-doc/faces))
+          (replace-match (format "@@texinfo:@ref{%s}@@" name)
+                         nil nil))))
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (defun racket-make-doc/tweak-quotes (s)
-  "Change \` \' style quotes to \` \` style."
+  "Change \` \' style quotes to ~~ style."
   (with-temp-buffer
     (insert s)
     (goto-char (point-min))
-    (while (re-search-forward (rx ?\`
-                                  (group (+ (or (syntax word)
-                                                (syntax symbol))))
-                                  ?\')
+    (while (re-search-forward (rx (or (seq ?\`
+                                           (group (+ (or (syntax word)
+                                                         (syntax symbol))))
+                                           (or ?\` ?\'))))
                               nil t)
       (let ((name (buffer-substring-no-properties (match-beginning 1)
                                                   (match-end 1))))
-        (replace-match (format "`%s`" name)
+        (replace-match (format "~%s~" name)
                        nil nil)))
     (buffer-substring-no-properties (point-min) (point-max))))
 
