@@ -76,7 +76,9 @@ Instead of modifying this directly, users should
 If a configuration does not already exist, automatically add
 one for \"/\" on the host/user/port."
   (let ((default-directory (racket--file-name-sans-remote-method default-directory)))
-    (or (cl-find default-directory
+    (or (and (boundp 'racket-buffer-back-end)
+             racket-buffer-back-end)
+        (cl-find default-directory
                  racket-back-end-configurations
                  :test
                  (lambda (dd back-end)
