@@ -90,7 +90,55 @@ one for \"/\" on the host/user/port."
                                  (substring-no-properties str)
                                "/")))))
 
-(defun racket-add-back-end (directory &rest plist)
+(defun racket--back-end-parse (plist directory)
+  "Parse a valid backend specification."
+  (let* ((local-p (not (file-remote-p directory)))
+         (directory (racket--file-name-sans-remote-method directory))
+         (plist
+          (list
+           :directory            directory
+           :racket-program       (plist-get plist :racket-program)
+           :remote-source-dir    (or (plist-get plist :remote-source-dir)
+                                     (unless local-p
+                                       "/tmp/racket-mode-back-end"))
+           :repl-tcp-accept-host (or (plist-get plist :repl-tcp-accept-host)
+                                     (if local-p "127.0.0.1" "0.0.0.0"))
+           :repl-tcp-port        (or (plist-get plist :repl-tcp-port)
+                                     (if local-p 0 55555))
+           :restart-watch-directories (plist-get plist :restart-watch-directories)
+           ;; These booleanp things need to distinguish nil meaning
+           ;; "user specififed false" from "user did not specify
+           ;; anything".
+           :windows              (if (memq :windows plist)
+                                     (plist-get plist :windows)
+                                   (and local-p racket--winp)))))
+    (racket--back-end-validate plist)
+    plist))
+
+(defun racket--add-back-end-for-buffer (&rest plist)
+  "Add a back end for the current buffer."
+  ;; Keep configs sorted from longest :directory pattern to shortest.
+  (let ((plist (racket--back-end-parse plist default-directory)))
+    (setq-local racket-buffer-back-end plist)
+    (racket--back-end-refresh-watches)
+    plist))
+
+(defun racket--add-back-end-for-directory (directory &rest plist)
+  "Add a back end for all modules at DIRECTORY."
+  (unless (and (stringp directory) (file-name-absolute-p directory))
+    (error "racket-add-back-end: directory must be file-name-absolute-p"))
+  (let ((plist (racket--back-end-parse plist directory)))
+    (racket-remove-back-end directory 'no-refresh-watches)
+    ;; Keep configs sorted from longest :directory pattern to shortest.
+    (setq racket-back-end-configurations
+          (sort (cons plist racket-back-end-configurations)
+                (lambda (a b)
+                  (> (length (plist-get a :directory))
+                     (length (plist-get b :directory))))))
+    (racket--back-end-refresh-watches)
+    plist))
+
+(defun racket-add-back-end (&optional directory &rest plist)
   "Add a description of a Racket Mode back end.
 
 Racket Mode supports one or more back ends, which are Racket
@@ -251,38 +299,9 @@ are a few examples.
                          :racket-program \"xvfb-run racket\")
 #+END_SRC
 "
-  (unless (and (stringp directory) (file-name-absolute-p directory))
-    (error "racket-add-back-end: directory must be file-name-absolute-p"))
-  (let* ((local-p (not (file-remote-p directory)))
-         (directory (racket--file-name-sans-remote-method directory))
-         (plist
-          (list
-           :directory            directory
-           :racket-program       (plist-get plist :racket-program)
-           :remote-source-dir    (or (plist-get plist :remote-source-dir)
-                                     (unless local-p
-                                       "/tmp/racket-mode-back-end"))
-           :repl-tcp-accept-host (or (plist-get plist :repl-tcp-accept-host)
-                                     (if local-p "127.0.0.1" "0.0.0.0"))
-           :repl-tcp-port        (or (plist-get plist :repl-tcp-port)
-                                     (if local-p 0 55555))
-           :restart-watch-directories (plist-get plist :restart-watch-directories)
-           ;; These booleanp things need to distinguish nil meaning
-           ;; "user specififed false" from "user did not specify
-           ;; anything".
-           :windows              (if (memq :windows plist)
-                                     (plist-get plist :windows)
-                                   (and local-p racket--winp)))))
-    (racket--back-end-validate plist)
-    (racket-remove-back-end directory 'no-refresh-watches)
-    ;; Keep configs sorted from longest :directory pattern to shortest.
-    (setq racket-back-end-configurations
-          (sort (cons plist racket-back-end-configurations)
-                (lambda (a b)
-                  (> (length (plist-get a :directory))
-                     (length (plist-get b :directory))))))
-    (racket--back-end-refresh-watches)
-    plist))
+  (if directory
+      (apply #'racket--add-back-end-for-directory directory plist)
+    (apply #'racket--add-back-end-for-buffer plist)))
 
 (defun racket--back-end-validate (plist)
   (cl-flet ((check
